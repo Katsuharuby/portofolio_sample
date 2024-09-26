@@ -1,4 +1,7 @@
 {% extends 'manage_app/base.html' %}
 {% block content %}
 <h1>就活日程管理アプリケーションです</h1>
+{% for day in day_list %}
+<h2>{{day.title}}</h2>
+{% endfor %}
 {% endblock %}
