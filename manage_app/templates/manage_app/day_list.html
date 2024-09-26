@@ -1,7 +1,36 @@
 {% extends 'manage_app/base.html' %}
 {% block content %}
 <h1>就活日程管理アプリケーションです</h1>
-{% for day in day_list %}
-<h2>{{day.title}}</h2>
-{% endfor %}
+<table class="table">
+<thead>
+    <tr>
+        <th>面談日付</th>
+        <th>会社名</th>
+        <th>適性検査種類</th>
+        <th>適性検査日付</th>
+        <th>履歴書提出日時</th>
+        <th>詳細</th>
+    </tr>
+</thead>
+<tbody>
+    {% for day in day_list %}
+    <tr>
+        <td>{{day.date_of_interview}}</td>
+        <td>{{day.name_of_company}}</td>
+        <td>{{day.what_kinda_spi}}</td>
+        <td>{{day.date_of_spi}}</td>
+        <td>{{day.resume_of_spi}}</td>
+        <td>{{day.detail_text}}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
 {% endblock %}
+
+
+{% comment %} date_of_interview = models.DateTimeField('面談日付')
+name_of_company = models.CharField('会社名',max_length=200)
+what_kinda_spi = models.CharField('適性検査種類',max_length=100)
+date_of_spi = models.DateTimeField('適性検査日付')
+resume_of_spi = models.DateTimeField('履歴書提出日時')
+detail_text = models.TextField('詳細') {% endcomment %}

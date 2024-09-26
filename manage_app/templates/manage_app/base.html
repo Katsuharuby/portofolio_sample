@@ -12,9 +12,11 @@
     {% block extracss %} {% endblock %}
 </head>
 <body>
-    <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="{% url 'manage_app:index' %}">一覧</a>
-        <a class="nav-link" href="{% url 'manage_app:add' %}">追加</a>
+    <div class = "container">
+        <nav class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="{% url 'manage_app:index' %}">一覧</a>
+            <a class="nav-link" href="{% url 'manage_app:add' %}">追加</a>
+        </nav>
     </div>
 {% block content %}
 {% endblock %}
