@@ -12,7 +12,7 @@ def add(request):
     form = DayCreateForm(request.POST or None)
     if request.method=='POST' and form.is_valid():
         form.save
-        return redirect('diary:index')
+        return redirect('manage_app:index')
     context={
         'form':form
     }
