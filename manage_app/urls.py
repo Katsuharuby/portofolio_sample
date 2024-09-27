@@ -5,5 +5,4 @@ app_name='manage_app'
 urlpatterns=[
     path('',views.index,name='index'),
     path('add/',views.add,name='add'),
-
 ]
