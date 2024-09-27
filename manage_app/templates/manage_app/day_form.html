@@ -2,8 +2,34 @@
 
 {% block content %}
 <form action="" method="POST">
+    <table class="table">
+        <tr>
+            <th>面談日付</th>
+            <td>{{form.date_of_interview}}</td>
+        </tr>
+        <tr>
+            <th>会社名</th>
+            <td>{{form.name_of_company}}</td>
+        </tr>
+        <tr>
+            <th>適性検査種類</th>
+            <td>{{form.what_kinda_spi}}</td>
+        </tr>
+        <tr>
+            <th>適性検査日付</th>
+            <td>{{form.date_of_spi}}</td>
+        </tr>
+        <tr>
+            <th>履歴書提出日時</th>
+            <td>{{form.resume_of_spi}}</td>
+        </tr>
+        <tr>
+            <th>詳細</th>
+            <td>{{form.detail_text}}</td>
+        </tr>
+    </table>
+
+<button type="submit" class="btn btn-primary">送信</button>
 {% csrf_token %}
-{{form.as_p}}
-<button type="submit">送信</button>
 </form>
 {% endblock %}

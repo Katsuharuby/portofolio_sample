@@ -12,20 +12,15 @@
     {% block extracss %} {% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container d-flex justify-content-center"> <!-- 中央寄せ -->
-            <div class="navbar-nav">
-                <a class="nav-link active" href="{% url 'manage_app:index' %}">一覧</a>
-                <a class="nav-link" href="{% url 'manage_app:add' %}">追加</a>
-            </div>
-        </div>
-    </nav>
-
-    
-
+<div class="container">
+<nav class="navbar-nav">
+    <a class="nav-link active" href="{% url 'manage_app:index' %}">一覧</a>
+    <a class="nav-link" href="{% url 'manage_app:add' %}">追加</a>
+</nav>
 {% block content %}
 {% endblock %}
 {% block extrajs %}
 {% endblock %}
+</div>
 </body>
 </html>
