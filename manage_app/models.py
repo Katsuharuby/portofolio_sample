@@ -9,4 +9,7 @@ class Day(models.Model):
     resume_of_spi = models.DateTimeField('履歴書提出日時')
     detail_text = models.TextField('詳細')
 
+    def __str__(self):
+        return self.name_of_company
+
 
