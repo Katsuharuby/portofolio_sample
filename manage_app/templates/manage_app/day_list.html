@@ -10,6 +10,8 @@
         <th>適性検査日付</th>
         <th>履歴書提出日時</th>
         <th>詳細</th>
+        <th>#</th>
+        <th>#</th>
     </tr>
 </thead>
 <tbody>
@@ -21,6 +23,8 @@
         <td>{{day.date_of_spi}}</td>
         <td>{{day.resume_of_spi}}</td>
         <td>{{day.detail_text}}</td>
+        <td><a href="{% url 'manage_app:update' day.pk %}">更新</a></td>
+        <td><a href="{% url 'manage_app:delete' day.pk %}">削除</a></td>
     </tr>
     {% endfor %}
 </tbody>
