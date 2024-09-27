@@ -22,7 +22,7 @@
         <td>{{day.what_kinda_spi}}</td>
         <td>{{day.date_of_spi}}</td>
         <td>{{day.resume_of_spi}}</td>
-        <td>{{day.detail_text}}</td>
+        <td><a href="{% url 'manage_app:detail' day.pk %}">{{ day.detail_text }}</a></td>
         <td><a href="{% url 'manage_app:update' day.pk %}">更新</a></td>
         <td><a href="{% url 'manage_app:delete' day.pk %}">削除</a></td>
     </tr>

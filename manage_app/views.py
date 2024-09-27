@@ -45,3 +45,12 @@ def delete(request,pk):
         'day':day
     }
     return render(request, 'manage_app/day_confirm_delete.html', context)
+
+def detail(request,pk):
+    
+    day = get_object_or_404(Day, pk=pk)
+    
+    context={
+        'day':day
+    }
+    return render(request, 'manage_app/day_detail.html', context)
