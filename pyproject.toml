@@ -8,8 +8,8 @@ readme = "README.md"
 packages = [{include = "manage_app"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
-Django = "^5.1.1"
+python = ">=3.10,<4.0"
+Django = "^4.1"
 
 
 [build-system]
