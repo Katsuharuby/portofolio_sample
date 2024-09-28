@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-z(tds8!cl$375zv$8)med7!06j0lmozd^ow&$nfd74w2y9sapj
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['portofolio.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['portofolio-wxlm.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
