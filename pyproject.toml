@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "manage-app"
+version = "0.1.0"
+description = "manage_app"
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "manage_app"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^5.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
