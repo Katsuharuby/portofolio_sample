@@ -5,6 +5,9 @@ from django.views import generic
 from .forms import DayCreateForm
 from .models import Day
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import DayCreateForm, SignUpForm
+from django.contrib.auth import login
+
 
 class IndexView(LoginRequiredMixin, generic.ListView):
     model = Day
@@ -42,3 +45,15 @@ class DeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Day
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('manage_app:index')
+    else:
+        form = SignUpForm()
+    return render(request, 'manage_app/signup.html', {'form': form})
+
