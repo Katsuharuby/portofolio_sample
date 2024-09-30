@@ -4,26 +4,41 @@ from django.urls import reverse_lazy
 from django.views import generic
 from .forms import DayCreateForm
 from .models import Day
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class IndexView(generic.ListView):
+class IndexView(LoginRequiredMixin, generic.ListView):
     model = Day
 
     def get_queryset(self):
-        return Day.objects.all().order_by('date_of_interview')
+        return Day.objects.filter(author=self.request.user).order_by('date_of_interview')
 
-class AddView(generic.CreateView):
+class AddView(LoginRequiredMixin, generic.CreateView):
     model = Day
     form_class=DayCreateForm
     success_url=reverse_lazy('manage_app:index')
 
-class UpdateView(generic.UpdateView):
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class UpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Day
     form_class=DayCreateForm
     success_url=reverse_lazy('manage_app:index')
 
-class DeleteView(generic.DeleteView):
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_queryset(self):
+        return Day.objects.filter(author=self.request.user)
+
+class DeleteView(LoginRequiredMixin, generic.DeleteView):
     model=Day
     success_url=reverse_lazy('manage_app:index')
 
-class DetailView(generic.DetailView):
+    def get_queryset(self):
+        return Day.objects.filter(author=self.request.user)
+
+class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Day

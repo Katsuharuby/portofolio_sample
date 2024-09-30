@@ -5,22 +5,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>就活日程管理アプリケーション</title>
-    <link rel="stylesheet" href="hhttps://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 
 
     {% block extracss %} {% endblock %}
 </head>
 <body>
-<div class="container">
-<nav class="navbar-nav">
-    <a class="nav-link active" href="{% url 'manage_app:index' %}">一覧</a>
-    <a class="nav-link" href="{% url 'manage_app:add' %}"target="_blank">追加</a>
-</nav>
-{% block content %}
-{% endblock %}
-{% block extrajs %}
-{% endblock %}
-</div>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'manage_app:index' %}">就活日程管理</a>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'manage_app:index' %}">一覧</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'manage_app:add' %}" target="_blank">追加</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <span class="nav-link">こんにちは、{{ user.username }}さん！</span>
+                            </li>
+                            <li class="nav-item">
+                                <form method="post" action="{% url 'manage_app:logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="nav-link btn btn-link" style="padding: 0;">ログアウト</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'manage_app:login' %}">ログイン</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        {% block content %}
+        {% endblock %}
+    
+        {% block extrajs %}
+        {% endblock %}
+    </div>
 </body>
 </html>
