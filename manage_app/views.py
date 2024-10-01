@@ -13,7 +13,8 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     model = Day
 
     def get_queryset(self):
-        return Day.objects.filter(author=self.request.user).order_by('date_of_interview')
+        sort_by = self.request.GET.get('sort_by', 'date_of_interview')
+        return Day.objects.filter(author=self.request.user).order_by(sort_by)
 
 class AddView(LoginRequiredMixin, generic.CreateView):
     model = Day
@@ -56,4 +57,3 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'manage_app/signup.html', {'form': form})
-
