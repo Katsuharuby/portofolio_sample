@@ -35,15 +35,19 @@ class IndexView(LoginRequiredMixin, generic.ListView):
         # ソート
         return queryset.order_by(sort_by)
 
-
 class AddView(LoginRequiredMixin, generic.CreateView):
     model = Day
-    form_class=DayCreateForm
-    success_url=reverse_lazy('manage_app:index')
+    form_class = DayCreateForm
+    success_url = reverse_lazy('manage_app:index')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+
+        # 「続けて保存」ボタンが押された場合
+        if self.request.POST.get('action') == 'save_and_add':
+            return redirect('manage_app:add')
+        return response
 
 class UpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Day

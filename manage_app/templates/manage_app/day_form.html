@@ -29,7 +29,8 @@
         </tr>
     </table>
 
-<button type="submit" class="btn btn-primary">送信</button>
+<button type="submit" name="action" value="save" class="btn btn-primary">保存</button>
+<button type="submit" name="action" value="save_and_add" class="btn btn-secondary">続けて追加</button>
 {% csrf_token %}
 </form>
 {% endblock %}
