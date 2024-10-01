@@ -1,6 +1,13 @@
 {% extends 'manage_app/base.html' %}
 {% block content %}
 <h1>就活日程管理アプリケーションです</h1>
+
+<div>
+    <a href="?sort_by=date_of_interview">面談日でソート</a>
+    <a href="?sort_by=what_kinda_spi">SPI期限でソート</a>
+    <a href="?sort_by=resume_of_spi">履歴書提出期限でソート</a>    
+</div>
+
 <table class="table">
 <thead>
     <tr>
