@@ -14,27 +14,26 @@ from .forms import DateRangeForm
 class IndexView(LoginRequiredMixin, generic.ListView):
     model = Day
     context_object_name = 'day_list'
-    paginate_by = 100
+    paginate_by = 10
 
     def get_queryset(self):
+        # クエリパラメータを取得
         sort_by = self.request.GET.get('sort_by', 'date_of_interview')
-        start_date = self.request.GET.get('start_date', None)
-        end_date = self.request.GET.get('end_date', None)
-        filter_by = self.request.GET.get('filter_by', 'date_of_interview')  # 基準フィールドを取得
-        
+        filter_by = self.request.GET.get('filter_by', 'date_of_interview')
+        start_date = self.request.GET.get('start_date', '2024-01-01')
+        end_date = self.request.GET.get('end_date', '2026-12-31')
+
+        # ユーザーごとのデータを取得
         queryset = Day.objects.filter(author=self.request.user)
 
-        # 日付範囲でのフィルタリング
+        # 日付範囲で絞り込み
         if start_date and end_date:
-            filter_field = f'{filter_by}__range'
-            queryset = queryset.filter(**{filter_field: [start_date, end_date]})
-        
-        return queryset.order_by(sort_by)
+            queryset = queryset.filter(**{
+                f'{filter_by}__range': [start_date, end_date]
+            })
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['date_range_form'] = DateRangeForm(self.request.GET or None)
-        return context
+        # ソート
+        return queryset.order_by(sort_by)
 
 
 class AddView(LoginRequiredMixin, generic.CreateView):
