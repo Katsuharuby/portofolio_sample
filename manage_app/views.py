@@ -22,7 +22,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
         queryset = Day.objects.filter(author=self.request.user)
         # テスト用
         # print(f"Filter recent: {filter_recent}")
-        today = timezone.localtime()
+        today = timezone.now()
         one_week_ago = today - timedelta(days=7)
         print(f"Today's date: {today}, One week ago: {one_week_ago}")
 
