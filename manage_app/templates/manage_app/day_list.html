@@ -6,8 +6,20 @@
     <a href="?sort_by=date_of_interview">面談日でソート</a>
     <a href="?sort_by=date_of_spi">適性検査期限でソート</a>
     <a href="?sort_by=resume_of_spi">履歴書提出期限でソート</a>
-    <a href="?filter_upcoming=true">今日から1週間以内の予定を表示</a>
 </div>
+
+<div>
+    <a href="?sort_by=date_of_interview&filter_recent=true">面談日でソート & 一週間以内</a>
+    <a href="?sort_by=date_of_spi&filter_recent=true">適性検査期限でソート & 一週間以内</a>
+    <a href="?sort_by=resume_of_spi&filter_recent=true">履歴書提出期限でソート & 一週間以内</a>
+</div>
+
+{% if request.GET.filter_recent == 'true' %}
+    <p>直近一週間のデータを表示中</p>
+{% else %}
+    <p>全データを表示中</p>
+{% endif %}
+
 
 <table class="table">
 <thead>

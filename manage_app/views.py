@@ -11,6 +11,9 @@ from django.utils import timezone
 from datetime import timedelta
 
 
+from django.utils import timezone
+from datetime import timedelta
+
 class IndexView(LoginRequiredMixin, generic.ListView):
     model = Day
     context_object_name = 'day_list'
@@ -18,18 +21,22 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         sort_by = self.request.GET.get('sort_by', 'date_of_interview')
-        filter_upcoming = self.request.GET.get('filter_upcoming', None)  # 「今日から1週間後まで」のフィルタリングオプション
+        filter_recent = self.request.GET.get('filter_recent', None)
         queryset = Day.objects.filter(author=self.request.user)
 
         today = timezone.now()
-        one_week_later = today + timedelta(days=7)
-        print(f"Today's date: {today}, One week later: {one_week_later}")
+        one_week_from_now = today + timedelta(days=7)
 
-        if filter_upcoming == 'true':
-            # 今日から一週間後までのデータに絞り込み
-            queryset = queryset.filter(date_of_interview__range=[today, one_week_later])
-
+        if filter_recent == 'true':
+            # フィルタリングオプションに基づいて期間を絞り込む
+            if sort_by == 'date_of_interview':
+                queryset = queryset.filter(date_of_interview__range=[today, one_week_from_now])
+            elif sort_by == 'date_of_spi':
+                queryset = queryset.filter(date_of_spi__range=[today, one_week_from_now])
+            elif sort_by == 'resume_of_spi':
+                queryset = queryset.filter(resume_of_spi__range=[today, one_week_from_now])
         return queryset.order_by(sort_by)
+
 
 class AddView(LoginRequiredMixin, generic.CreateView):
     model = Day
