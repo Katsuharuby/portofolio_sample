@@ -4,18 +4,19 @@
 
 <div>
     <a href="?sort_by=date_of_interview">面談日でソート</a>
-    <a href="?sort_by=what_kinda_spi">SPI期限でソート</a>
-    <a href="?sort_by=resume_of_spi">履歴書提出期限でソート</a>    
+    <a href="?sort_by=date_of_spi">適性検査期限でソート</a>
+    <a href="?sort_by=resume_of_spi">履歴書提出期限でソート</a>
+    <a href="?filter_upcoming=true">今日から1週間以内の予定を表示</a>
 </div>
 
 <table class="table">
 <thead>
     <tr>
-        <th>面談日付</th>
+        <th><a href="?sort_by=date_of_interview">面談日付</a></th>
         <th>会社名</th>
         <th>適性検査種類</th>
-        <th>適性検査締切</th>
-        <th>履歴書提出締切</th>
+        <th><a href="?sort_by=date_of_spi">適性検査締切</a></th>
+        <th><a href="?sort_by=resume_of_spi">履歴書提出締切</a></th>
         <th>詳細</th>
         <th>#</th>
         <th>#</th>
@@ -29,7 +30,7 @@
         <td>{{day.what_kinda_spi}}</td>
         <td>{{day.date_of_spi}}</td>
         <td>{{day.resume_of_spi}}</td>
-        <td><a href="{% url 'manage_app:detail' day.pk %}">{{ day.detail_text }}</a></td>
+        <td><a href="{% url 'manage_app:detail' day.pk %}">詳細</a></td>
         <td><a href="{% url 'manage_app:update' day.pk %}">更新</a></td>
         <td><a href="{% url 'manage_app:delete' day.pk %}">削除</a></td>
     </tr>
@@ -37,11 +38,3 @@
 </tbody>
 </table>
 {% endblock %}
-
-
-{% comment %} date_of_interview = models.DateTimeField('面談日付')
-name_of_company = models.CharField('会社名',max_length=200)
-what_kinda_spi = models.CharField('適性検査種類',max_length=100)
-date_of_spi = models.DateTimeField('適性検査日付')
-resume_of_spi = models.DateTimeField('履歴書提出日時')
-detail_text = models.TextField('詳細') {% endcomment %}
