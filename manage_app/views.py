@@ -18,12 +18,17 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         # クエリパラメータを取得
-        sort_by = self.request.GET.get('sort_by', 'date_of_interview')
-        filter_by = self.request.GET.get('filter_by', 'date_of_interview')
-        start_date = self.request.GET.get('start_date', '2024-01-01')
-        end_date = self.request.GET.get('end_date', '2026-12-31')
+        filter_by = self.request.GET.get('filter_by', 'date_of_interview')  # ソート基準
 
-        # ユーザーごとのデータを取得
+        # デフォルトの日付範囲
+        default_start_date = '2024-01-01'
+        default_end_date = '2026-12-31'
+
+        # 開始日と終了日をクエリから取得、なければデフォルト値を使用
+        start_date = self.request.GET.get('start_date', default_start_date)
+        end_date = self.request.GET.get('end_date', default_end_date)
+
+        # ユーザーのデータを取得
         queryset = Day.objects.filter(author=self.request.user)
 
         # 日付範囲で絞り込み
@@ -32,8 +37,9 @@ class IndexView(LoginRequiredMixin, generic.ListView):
                 f'{filter_by}__range': [start_date, end_date]
             })
 
-        # ソート
-        return queryset.order_by(sort_by)
+        # ソート基準でソート
+        return queryset.order_by(filter_by)
+
 
 class AddView(LoginRequiredMixin, generic.CreateView):
     model = Day
