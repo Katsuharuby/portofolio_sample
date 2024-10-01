@@ -2,23 +2,36 @@
 {% block content %}
 <h1>就活日程管理アプリケーションです</h1>
 
+<form method="get">
+    <div class="row">
+        <div class="col-md-3">
+            <label for="start_date">開始日</label>
+            <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+        </div>
+        <div class="col-md-3">
+            <label for="end_date">終了日</label>
+            <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
+        </div>
+        <div class="col-md-3">
+            <label for="filter_by">基準</label>
+            <select name="filter_by" class="form-control">
+                <option value="date_of_interview" {% if request.GET.filter_by == "date_of_interview" %}selected{% endif %}>面談日付</option>
+                <option value="date_of_spi" {% if request.GET.filter_by == "date_of_spi" %}selected{% endif %}>適性検査締切</option>
+                <option value="resume_of_spi" {% if request.GET.filter_by == "resume_of_spi" %}selected{% endif %}>履歴書提出締切</option>
+            </select>
+        </div>
+        <div class="col-md-3 align-self-end">
+            <button type="submit" class="btn btn-primary">検索</button>
+        </div>
+    </div>
+</form>
+
 <div>
     <a href="?sort_by=date_of_interview">面談日でソート</a>
     <a href="?sort_by=date_of_spi">適性検査期限でソート</a>
     <a href="?sort_by=resume_of_spi">履歴書提出期限でソート</a>
 </div>
 
-<div>
-    <a href="?sort_by=date_of_interview&filter_recent=true">面談日でソート & 一週間以内</a>
-    <a href="?sort_by=date_of_spi&filter_recent=true">適性検査期限でソート & 一週間以内</a>
-    <a href="?sort_by=resume_of_spi&filter_recent=true">履歴書提出期限でソート & 一週間以内</a>
-</div>
-
-{% if request.GET.filter_recent == 'true' %}
-    <p>直近一週間のデータを表示中</p>
-{% else %}
-    <p>全データを表示中</p>
-{% endif %}
 
 
 <table class="table">
@@ -30,8 +43,8 @@
         <th><a href="?sort_by=date_of_spi">適性検査締切</a></th>
         <th><a href="?sort_by=resume_of_spi">履歴書提出締切</a></th>
         <th>詳細</th>
-        <th>#</th>
-        <th>#</th>
+        <th>更新</th>
+        <th>削除</th>
     </tr>
 </thead>
 <tbody>

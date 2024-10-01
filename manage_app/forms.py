@@ -27,3 +27,26 @@ class SignUpForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class DateRangeForm(forms.Form):
+    FILTER_CHOICES = [
+        ('date_of_interview', '面談日付'),
+        ('date_of_spi', '適性検査締切'),
+        ('resume_of_spi', '履歴書提出締切'),
+    ]
+    
+    start_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}), 
+        required=False,
+        label='開始日'
+    )
+    end_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}), 
+        required=False,
+        label='終了日'
+    )
+    filter_by = forms.ChoiceField(
+        choices=FILTER_CHOICES,
+        required=True,
+        label='絞り込み基準'
+    )

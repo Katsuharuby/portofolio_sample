@@ -9,33 +9,32 @@ from .forms import DayCreateForm, SignUpForm
 from django.contrib.auth import login
 from django.utils import timezone
 from datetime import timedelta
-
-
-from django.utils import timezone
-from datetime import timedelta
+from .forms import DateRangeForm
 
 class IndexView(LoginRequiredMixin, generic.ListView):
     model = Day
     context_object_name = 'day_list'
-    paginate_by = 10
+    paginate_by = 100
 
     def get_queryset(self):
         sort_by = self.request.GET.get('sort_by', 'date_of_interview')
-        filter_recent = self.request.GET.get('filter_recent', None)
+        start_date = self.request.GET.get('start_date', None)
+        end_date = self.request.GET.get('end_date', None)
+        filter_by = self.request.GET.get('filter_by', 'date_of_interview')  # 基準フィールドを取得
+        
         queryset = Day.objects.filter(author=self.request.user)
 
-        today = timezone.now()
-        one_week_from_now = today + timedelta(days=7)
-
-        if filter_recent == 'true':
-            # フィルタリングオプションに基づいて期間を絞り込む
-            if sort_by == 'date_of_interview':
-                queryset = queryset.filter(date_of_interview__range=[today, one_week_from_now])
-            elif sort_by == 'date_of_spi':
-                queryset = queryset.filter(date_of_spi__range=[today, one_week_from_now])
-            elif sort_by == 'resume_of_spi':
-                queryset = queryset.filter(resume_of_spi__range=[today, one_week_from_now])
+        # 日付範囲でのフィルタリング
+        if start_date and end_date:
+            filter_field = f'{filter_by}__range'
+            queryset = queryset.filter(**{filter_field: [start_date, end_date]})
+        
         return queryset.order_by(sort_by)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['date_range_form'] = DateRangeForm(self.request.GET or None)
+        return context
 
 
 class AddView(LoginRequiredMixin, generic.CreateView):
