@@ -18,18 +18,16 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         sort_by = self.request.GET.get('sort_by', 'date_of_interview')
-        filter_recent = self.request.GET.get('filter_recent', None)  # 直近1週間のフィルタリングオプション
+        filter_upcoming = self.request.GET.get('filter_upcoming', None)  # 「今日から1週間後まで」のフィルタリングオプション
         queryset = Day.objects.filter(author=self.request.user)
-        # テスト用
-        # print(f"Filter recent: {filter_recent}")
-        today = timezone.now()
-        one_week_ago = today - timedelta(days=7)
-        print(f"Today's date: {today}, One week ago: {one_week_ago}")
 
-        if filter_recent == 'true':
-            today = timezone.now()
-            one_week_ago = today - timedelta(days=7)
-            queryset = queryset.filter(date_of_interview__range=[one_week_ago, today])
+        today = timezone.now()
+        one_week_later = today + timedelta(days=7)
+        print(f"Today's date: {today}, One week later: {one_week_later}")
+
+        if filter_upcoming == 'true':
+            # 今日から一週間後までのデータに絞り込み
+            queryset = queryset.filter(date_of_interview__range=[today, one_week_later])
 
         return queryset.order_by(sort_by)
 
