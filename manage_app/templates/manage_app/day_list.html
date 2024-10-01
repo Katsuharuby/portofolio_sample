@@ -13,7 +13,7 @@
             <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
         </div>
         <div class="col-md-3">
-            <label for="filter_by">基準</label>
+            <label for="filter_by">ソート</label>
             <select name="filter_by" class="form-control">
                 <option value="date_of_interview" {% if request.GET.filter_by == "date_of_interview" %}selected{% endif %}>面談日付</option>
                 <option value="date_of_spi" {% if request.GET.filter_by == "date_of_spi" %}selected{% endif %}>適性検査締切</option>
