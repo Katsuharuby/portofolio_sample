@@ -7,14 +7,31 @@ from .models import Day
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import DayCreateForm, SignUpForm
 from django.contrib.auth import login
+from django.utils import timezone
+from datetime import timedelta
 
 
 class IndexView(LoginRequiredMixin, generic.ListView):
     model = Day
+    context_object_name = 'day_list'
+    paginate_by = 10
 
     def get_queryset(self):
         sort_by = self.request.GET.get('sort_by', 'date_of_interview')
-        return Day.objects.filter(author=self.request.user).order_by(sort_by)
+        filter_recent = self.request.GET.get('filter_recent', None)  # 直近1週間のフィルタリングオプション
+        queryset = Day.objects.filter(author=self.request.user)
+        # テスト用
+        # print(f"Filter recent: {filter_recent}")
+        today = timezone.localtime()
+        one_week_ago = today - timedelta(days=7)
+        print(f"Today's date: {today}, One week ago: {one_week_ago}")
+
+        if filter_recent == 'true':
+            today = timezone.now()
+            one_week_ago = today - timedelta(days=7)
+            queryset = queryset.filter(date_of_interview__range=[one_week_ago, today])
+
+        return queryset.order_by(sort_by)
 
 class AddView(LoginRequiredMixin, generic.CreateView):
     model = Day
