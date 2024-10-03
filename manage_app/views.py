@@ -10,7 +10,8 @@ from django.contrib.auth import login
 from django.utils import timezone
 from datetime import timedelta,datetime
 from .forms import DateRangeForm
-from django.utils.dateparse import parse_date
+# from django.utils.dateparse import parse_date
+from django.db.models import Q
 
 class IndexView(LoginRequiredMixin, generic.ListView):
     model = Day
@@ -29,6 +30,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
         start_date = datetime.strptime(start_date_str, '%Y-%m-%d').replace(hour=0, minute=0, second=0)
         end_date = datetime.strptime(end_date_str, '%Y-%m-%d').replace(hour=23, minute=59, second=59)
 
+        company_name = self.request.GET.get('company_name', '')
 
         queryset = Day.objects.filter(author=self.request.user)
 
@@ -36,6 +38,9 @@ class IndexView(LoginRequiredMixin, generic.ListView):
             queryset = queryset.filter(**{
                 f'{filter_by}__range': [start_date, end_date]
             })
+
+        if company_name:
+            queryset = queryset.filter(Q(name_of_company__icontains=company_name))
 
         return queryset.order_by(filter_by)
 
