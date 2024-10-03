@@ -17,27 +17,21 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        # クエリパラメータを取得
-        filter_by = self.request.GET.get('filter_by', 'date_of_interview')  # ソート基準
+        filter_by = self.request.GET.get('filter_by', 'date_of_interview')
 
-        # デフォルトの日付範囲
         default_start_date = '2024-01-01'
         default_end_date = '2026-12-31'
 
-        # 開始日と終了日をクエリから取得、なければデフォルト値を使用
         start_date = self.request.GET.get('start_date', default_start_date)
         end_date = self.request.GET.get('end_date', default_end_date)
 
-        # ユーザーのデータを取得
         queryset = Day.objects.filter(author=self.request.user)
 
-        # 日付範囲で絞り込み
         if start_date and end_date:
             queryset = queryset.filter(**{
                 f'{filter_by}__range': [start_date, end_date]
             })
 
-        # ソート基準でソート
         return queryset.order_by(filter_by)
 
 
@@ -50,7 +44,6 @@ class AddView(LoginRequiredMixin, generic.CreateView):
         form.instance.author = self.request.user
         response = super().form_valid(form)
 
-        # 「続けて保存」ボタンが押された場合
         if self.request.POST.get('action') == 'save_and_add':
             return redirect('manage_app:add')
         return response

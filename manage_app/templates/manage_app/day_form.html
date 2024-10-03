@@ -1,7 +1,7 @@
 {% extends 'manage_app/base.html' %}
 
 {% block content %}
-<form action="" method="POST">
+<form action="" method="POST" enctype="multipart/form-data">
     <table class="table">
         <tr>
             <th>面談日付</th>
@@ -26,6 +26,10 @@
         <tr>
             <th>詳細</th>
             <td>{{form.detail_text}}</td>
+        </tr>
+        <tr>
+            <th>ファイルアップロード</th>
+            <td>{{ form.file_upload }}</td>
         </tr>
     </table>
 
