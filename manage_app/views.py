@@ -10,6 +10,7 @@ from django.contrib.auth import login
 from django.utils import timezone
 from datetime import timedelta
 from .forms import DateRangeForm
+from django.utils.dateparse import parse_date
 
 class IndexView(LoginRequiredMixin, generic.ListView):
     model = Day
@@ -24,6 +25,10 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
         start_date = self.request.GET.get('start_date', default_start_date)
         end_date = self.request.GET.get('end_date', default_end_date)
+
+        start_date = parse_date(start_date) or parse_date(default_start_date)
+        end_date = parse_date(end_date) or parse_date(default_end_date)
+
 
         queryset = Day.objects.filter(author=self.request.user)
 
