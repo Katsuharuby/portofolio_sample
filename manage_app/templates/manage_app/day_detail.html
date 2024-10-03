@@ -27,6 +27,16 @@
         <th>詳細</th>
         <td>{{day.detail_text | linebreaksbr }}</td>
     </tr>
+    <tr>
+        <th>アップロードファイル</th>
+        <td>
+            {% if day.file_upload %}
+                <a href="{{ day.file_upload.url }}" target="_blank">ファイルを表示</a>
+            {% else %}
+                アップロードされたファイルはありません。
+            {% endif %}
+        </td>
+    </tr>
 </table>
 
 {% endblock %}

@@ -8,7 +8,8 @@ class Day(models.Model):
     what_kinda_spi = models.CharField('適性検査種類',max_length=100)
     date_of_spi = models.DateTimeField('適性検査日付')
     resume_of_spi = models.DateTimeField('履歴書提出日時')
-    detail_text = models.TextField('詳細')
+    detail_text = models.TextField('詳細', blank = True, null = True)
+    file_upload = models.FileField(upload_to='uploads/',blank = True, null = True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='投稿者')
 
     def __str__(self):

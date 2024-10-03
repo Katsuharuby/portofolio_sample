@@ -7,7 +7,7 @@ class DayCreateForm(forms.ModelForm):
 
     class Meta:
         model = Day
-        fields = ['date_of_interview', 'name_of_company', 'what_kinda_spi', 'date_of_spi', 'resume_of_spi', 'detail_text']
+        fields = ['date_of_interview', 'name_of_company', 'what_kinda_spi', 'date_of_spi', 'resume_of_spi', 'detail_text', 'file_upload' ]
         widgets = {
             'date_of_interview': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'date_of_spi': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
