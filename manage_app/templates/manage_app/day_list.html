@@ -50,6 +50,10 @@
                 <option value="resume_of_spi" {% if request.GET.filter_by == "resume_of_spi" %}selected{% endif %}>履歴書提出締切</option>
             </select>
         </div>
+        <div class="col-md-3">
+            <label for="company_name">会社名で検索</label>
+            <input type="text" name="company_name" class="form-control" value="{{ request.GET.company_name }}">
+        </div>
         <div class="col-md-3 align-self-end">
             <button type="submit" class="btn btn-primary">検索</button>
         </div>
