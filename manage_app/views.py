@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import DayCreateForm, SignUpForm
 from django.contrib.auth import login
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta,datetime
 from .forms import DateRangeForm
 from django.utils.dateparse import parse_date
 
@@ -23,11 +23,11 @@ class IndexView(LoginRequiredMixin, generic.ListView):
         default_start_date = '2024-01-01'
         default_end_date = '2026-12-31'
 
-        start_date = self.request.GET.get('start_date', default_start_date)
-        end_date = self.request.GET.get('end_date', default_end_date)
+        start_date_str = self.request.GET.get('start_date', default_start_date)
+        end_date_str = self.request.GET.get('end_date', default_end_date)
 
-        start_date = parse_date(start_date) or parse_date(default_start_date)
-        end_date = parse_date(end_date) or parse_date(default_end_date)
+        start_date = datetime.strptime(start_date_str, '%Y-%m-%d').replace(hour=0, minute=0, second=0)
+        end_date = datetime.strptime(end_date_str, '%Y-%m-%d').replace(hour=23, minute=59, second=59)
 
 
         queryset = Day.objects.filter(author=self.request.user)
