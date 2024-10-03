@@ -6,11 +6,11 @@
     <div class="row">
         <div class="col-md-3">
             <label for="start_date">開始日</label>
-            <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date|default_if_none:'2024-01-01' }}">
+            <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date|default:'2024-01-01' }}">
         </div>
         <div class="col-md-3">
             <label for="end_date">終了日</label>
-            <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date|default_if_none:'2026-12-31' }}">
+            <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date|default:'2026-12-31' }}">
         </div>
         <div class="col-md-3">
             <label for="filter_by">ソート基準</label>
